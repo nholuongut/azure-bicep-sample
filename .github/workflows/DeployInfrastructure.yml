@@ -1,0 +1,47 @@
+name: Deploy Infrastructure
+on:
+  workflow_dispatch:
+    inputs:
+      isInitialSetup:
+        description: 'Replicas are created only during initial setup.'
+        required: true
+        default: 'false'
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:      
+      - name: checkout
+        uses: actions/checkout@v2
+      
+      #- id: maintain-github-ips
+      #  run: |
+      #      curl -s https://api.github.com/meta | jq '.actions' > ./bicep/github-ips.json
+      #      git config user.name  ${{ github.actor }}
+      #      git config user.email  ${{ github.actor }}@github.com
+      #      git add ./bicep/github-ips.json
+      #      git commit --allow-empty -m "Updating ./bicep/github-ips.json for one click deploy"
+      #      git push
+            
+      - name: azure-login
+        uses: Azure/login@v1.4.4
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Get Subscription ID
+        id: subid
+        run: |
+            SUBID=$(az account show --query id --output tsv)
+            echo "::set-output name=SUBID::${SUBID}"
+            
+      - name: deploy
+        uses: azure/arm-deploy@v1.0.8
+        with:
+          scope: 'subscription'
+          region: 'centralus'
+          subscriptionId: ${{ steps.subid.outputs.subid }}
+          template: ./bicep/main.bicep
+          # deploymentMode: '${{ github.event.inputs.deploymentMode }}'
+          parameters: ./parameters.json isInitialSetup=${{ github.event.inputs.isInitialSetup }} databaseUser=${{ secrets.GHOST_MYSQL_USERNAME }} databasePassword=${{ secrets.GHOST_MYSQL_PASSWORD }}
+          failOnStdErr: true

@@ -1,0 +1,27 @@
+name: Push Container to ACR
+on:
+  workflow_dispatch:
+        
+jobs:
+  build-and-deploy:
+    env:
+        greeting: Hello
+    runs-on: ubuntu-latest
+    steps:
+  
+    - name: checkout
+      uses: actions/checkout@v2
+    
+    - name: azure-login
+      uses: Azure/login@v1.4.4
+      with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - run: | 
+          containerRegistryName=$(jq '.parameters.containerRegistryName.value' ./parameters.json | tr -d '"')
+          ghostContainerName=$(jq '.parameters.ghostContainerName.value' parameters.json | tr -d '"')
+          echo $containerRegistryName
+          az acr login --name $containerRegistryName
+          cd '${{ github.workspace }}/docker'
+          docker build . -t $containerRegistryName.azurecr.io/$ghostContainerName:${{ github.run_number }} -t $containerRegistryName.azurecr.io/$ghostContainerName:latest
+          docker push $containerRegistryName.azurecr.io/$ghostContainerName:latest  
+            

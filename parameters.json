@@ -1,0 +1,69 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "containerRegistryName": {
+      "value": "dscr5sdslxc2tc2qa"
+    },
+    "applicationNamePrefix": {
+      "value": "ds"
+    },
+    "primaryLocation": {
+      "value": "centralus"
+    },
+    "primaryResourceGroupSuffix": {
+      "value": "1"
+    },
+    "secondaryLocation": {
+      "value": "eastus"
+    },
+    "secondaryResourceGroupSuffix": {
+      "value": "2"
+    },
+    "commonLocation": {
+      "value": "centralus"
+    },
+    "commonResourceGroupSuffix": {
+      "value": "c"
+    },
+    "appServicePlanSku": {
+      "value": "P1v2"
+    },
+    "mySQLServerSku": {
+      "value": "GP_Gen5_4"
+    },
+    "logAnalyticsWorkspaceSku": {
+      "value": "PerGB2018"
+    },
+    "frontDoorSku": {
+      "value": "Premium_AzureFrontDoor"
+    },
+    "containerRegistrySku": {
+      "value": "Premium"
+    },
+    "ghostContainerName": {
+      "value": "custom-ghost-ai"
+    },
+    "databaseUser": {
+      "value": "ghost"
+    },
+    "databaseName": {
+      "value": "ghost"
+    },
+    "databasePassword": {
+      "value": null
+    },
+    "ghostHealthCheckPath": {
+      "value": "/admin/site"
+    },
+    "ghostContentFileShareName": {
+      "value": "contentfiles"
+    },
+    "ghostContentFilesMountPath": {
+      "value": "/var/lib/ghost/content_files"
+    },
+    "isInitialSetup": {
+      "value": false
+    }
+  }
+}
