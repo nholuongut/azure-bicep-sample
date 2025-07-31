@@ -510,7 +510,7 @@ The App Service settings for both the primary and the secondary App Service. It 
 * [Email Address](luongutnho@hotmail.com)
 * [PayPal.Me](https://www.paypal.com/paypalme/nholuongut)
 
-![](Donate.png)
+![](Donate.jpg)
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/nholuong)
 
 ![](https://i.imgur.com/waxVImv.png)
